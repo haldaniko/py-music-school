@@ -1,13 +1,28 @@
-from django.urls import path
-from .views import MusicianListCreateView, MusicianDetailView
+from django.urls import include, path
+from rest_framework import routers
+
+from musician.views import MusicianViewSet
+
+
+musician_list = MusicianViewSet.as_view(
+    actions={
+        "get": "list",
+        "post": "create",
+    },
+)
+
+musician_detail = MusicianViewSet.as_view(
+    actions={
+        "get": "retrieve",
+        "put": "update",
+        "patch": "partial_update",
+        "delete": "destroy",
+    }
+)
 
 urlpatterns = [
-    path("musicians/",
-         MusicianListCreateView.as_view(),
-         name="musician-list-create"),
-    path("musicians/<int:pk>/",
-         MusicianDetailView.as_view(),
-         name="musician-detail"),
+    path("musicians/", musician_list, name="manage-list"),
+    path("musicians/<int:pk>/", musician_detail, name="musician-detail")
 ]
 
 app_name = "musician"

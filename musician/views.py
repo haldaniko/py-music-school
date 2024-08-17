@@ -1,13 +1,9 @@
-from rest_framework import generics
-from .models import Musician
-from .serializers import MusicianSerializer
+from rest_framework import viewsets
+
+from musician.models import Musician
+from musician.serializers import MusicianSerializer
 
 
-class MusicianListCreateView(generics.ListCreateAPIView):
-    queryset = Musician.objects.all()
-    serializer_class = MusicianSerializer
-
-
-class MusicianDetailView(generics.RetrieveUpdateDestroyAPIView):
+class MusicianViewSet(viewsets.ModelViewSet):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
